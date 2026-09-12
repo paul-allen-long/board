@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Board API
+  version: 1.0.0
+  description: API for the Board task tracker.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/board:
+    get:
+      operationId: getBoard
+      summary: Get all board columns and tasks.
+      responses:
+        "200":
+          description: Board data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Board"
+  /api/columns:
+    post:
+      operationId: createColumn
+      summary: Create a board column.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateColumnRequest"
+      responses:
+        "201":
+          description: Created column.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Column"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /api/columns/{columnId}:
+    parameters:
+      - name: columnId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      operationId: renameColumn
+      summary: Rename a board column.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateColumnRequest"
+      responses:
+        "204":
+          description: Column renamed.
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteColumn
+      summary: Delete a board column and move its tasks to another column.
+      responses:
+        "204":
+          description: Column deleted.
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /api/tasks:
+    post:
+      operationId: createTask
+      summary: Create a default task in a column.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRequest"
+      responses:
+        "201":
+          description: Created task.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /api/tasks/{taskId}:
+    parameters:
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: integer
+    patch:
+      operationId: moveTask
+      summary: Move a task to another board column.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveTaskRequest"
+      responses:
+        "204":
+          description: Task moved.
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteTask
+      summary: Delete a task.
+      responses:
+        "204":
+          description: Task deleted.
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  responses:
+    BadRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Board:
+      type: object
+      required: [columns, tasks]
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: "#/components/schemas/Column"
+        tasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/Task"
+    Column:
+      type: object
+      required: [id, name, color]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          minLength: 1
+        color:
+          type: string
+          pattern: "^#[0-9a-fA-F]{6}$"
+    Task:
+      type: object
+      required: [id, key, title, label, priority, assignee, columnId]
+      properties:
+        id:
+          type: integer
+        key:
+          type: string
+        title:
+          type: string
+        label:
+          type: string
+        priority:
+          type: string
+          enum: [high, medium, low]
+        assignee:
+          type: string
+        columnId:
+          type: string
+    CreateColumnRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+    UpdateColumnRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+    CreateTaskRequest:
+      type: object
+      required: [columnId]
+      properties:
+        columnId:
+          type: string
+    MoveTaskRequest:
+      type: object
+      required: [columnId]
+      properties:
+        columnId:
+          type: string
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string

@@ -1,0 +1,12 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  cmd = "go build -o ./tmp/board-api.exe ./server"
+  entrypoint = ["./tmp/board-api.exe"]
+  include_ext = ["go", "json", "yaml"]
+  exclude_dir = ["node_modules", "dist", "tmp"]
+  exclude_regex = ["_test.go"]
+
+[log]
+  time = true

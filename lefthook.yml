@@ -1,0 +1,22 @@
+pre-commit:
+  jobs:
+    - name: biome
+      glob: "*.{js,jsx,ts,tsx,json,md,yml,yaml}"
+      run: bunx biome format --write {staged_files}
+      stage_fixed: true
+    - name: biome-lint
+      glob: "*.{js,jsx,ts,tsx,json,md,yml,yaml}"
+      run: bunx biome lint {staged_files}
+    - name: eslint
+      glob: "*.{js,jsx,ts,tsx}"
+      exclude: "src/api/generated/**"
+      run: bunx eslint {staged_files}
+    - name: gofmt
+      glob: "*.go"
+      run: gofmt -w {staged_files}
+      stage_fixed: true
+
+pre-push:
+  jobs:
+    - name: project-check
+      run: bun run check && bun run build

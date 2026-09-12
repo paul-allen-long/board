@@ -1,0 +1,116 @@
+{
+  "columns": [
+    {
+      "color": "#64748b",
+      "id": "backlog",
+      "name": "Бэклог"
+    },
+    {
+      "color": "#2563eb",
+      "id": "progress",
+      "name": "В работе"
+    },
+    {
+      "color": "#8b5cf6",
+      "id": "review",
+      "name": "Проверка"
+    },
+    {
+      "color": "#10b981",
+      "id": "done",
+      "name": "Готово"
+    }
+  ],
+  "tasks": [
+    {
+      "assignee": "АБ",
+      "columnId": "done",
+      "id": 1,
+      "key": "DESK-12",
+      "label": "Дизайн",
+      "priority": "high",
+      "title": "Собрать первый экран доски"
+    },
+    {
+      "assignee": "МК",
+      "columnId": "done",
+      "id": 2,
+      "key": "DESK-15",
+      "label": "Продукт",
+      "priority": "medium",
+      "title": "Добавить быстрый поиск задач"
+    },
+    {
+      "assignee": "ЕП",
+      "columnId": "review",
+      "id": 3,
+      "key": "DESK-18",
+      "label": "Frontend",
+      "priority": "medium",
+      "title": "Проверить адаптивную вёрстку"
+    },
+    {
+      "assignee": "АБ",
+      "columnId": "progress",
+      "id": 4,
+      "key": "DESK-09",
+      "label": "Dev",
+      "priority": "low",
+      "title": "Настроить проект на Bun"
+    },
+    {
+      "assignee": "НК",
+      "columnId": "backlog",
+      "id": 5,
+      "key": "DESK-21",
+      "label": "Контент",
+      "priority": "low",
+      "title": "Подготовить текст для пустого состояния"
+    },
+    {
+      "assignee": "ВЫ",
+      "columnId": "progress",
+      "id": 6,
+      "key": "DESK-27",
+      "label": "Новая",
+      "priority": "medium",
+      "title": "Новая задача"
+    },
+    {
+      "assignee": "ВЫ",
+      "columnId": "done",
+      "id": 7,
+      "key": "DESK-28",
+      "label": "Новая",
+      "priority": "medium",
+      "title": "Новая задача"
+    },
+    {
+      "assignee": "ВЫ",
+      "columnId": "backlog",
+      "id": 8,
+      "key": "DESK-29",
+      "label": "Новая",
+      "priority": "medium",
+      "title": "Новая задача"
+    },
+    {
+      "assignee": "ВЫ",
+      "columnId": "done",
+      "id": 9,
+      "key": "DESK-30",
+      "label": "Новая",
+      "priority": "medium",
+      "title": "Новая задача"
+    },
+    {
+      "assignee": "ВЫ",
+      "columnId": "done",
+      "id": 10,
+      "key": "DESK-31",
+      "label": "Новая",
+      "priority": "medium",
+      "title": "Новая задача"
+    }
+  ]
+}

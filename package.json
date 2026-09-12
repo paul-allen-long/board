@@ -1,0 +1,50 @@
+{
+  "name": "board",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --names frontend,api --prefix-colors cyan,magenta \"bun run dev:frontend\" \"bun run dev:api\"",
+    "dev:frontend": "bun ./public/index.html",
+    "dev:api": "go run github.com/air-verse/air@v1.67.4 -c .air.toml",
+    "build": "bun build ./public/index.html --outdir ./dist --production",
+    "typecheck": "tsc --noEmit",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint . && eslint .",
+    "lint:fix": "biome lint --write . && eslint . --fix",
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run api:check",
+    "api:check": "go vet ./server ./server/api && go test ./server ./server/api",
+    "api:generate:go": "go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@v2.8.0 --config api/oapi-codegen.yaml api/openapi.yaml",
+    "api:generate:types": "openapi-typescript ./api/openapi.yaml -o ./src/api/generated/schema.ts",
+    "api:generate": "bun run api:generate:go && bun run api:generate:types",
+    "prepare": "lefthook install"
+  },
+  "dependencies": {
+    "@dnd-kit/react": "0.5.0",
+    "@gravity-ui/icons": "2.22.0",
+    "@gravity-ui/uikit": "7.47.1",
+    "@tanstack/react-query": "5.102.8",
+    "i18next": "26.4.2",
+    "motion": "13.2.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-i18next": "17.0.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.13",
+    "@eslint/js": "10.0.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "concurrently": "10.0.5",
+    "eslint": "9.39.1",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.12.0",
+    "lefthook": "2.1.9",
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0"
+  }
+}

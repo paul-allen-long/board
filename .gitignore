@@ -1,0 +1,11 @@
+node_modules/
+dist/
+tmp/
+bin/
+coverage/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+server/data/board.json.tmp
